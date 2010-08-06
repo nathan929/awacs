@@ -1,0 +1,42 @@
+#{extends 'CRUD/layout.html' /}
+        <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/jquery-ui.min.js'}" type="text/javascript" charset="utf-8"></script>
+
+<div id="crudBlank" class="${type.name}">
+	
+	<h2 id="crudBlankTitle">&{'crud.blank.title', type.modelName}</h2>
+	
+	<div class="objectForm">
+	#{form action:@create(), enctype:'multipart/form-data'}
+	#{crud.form fields:['provider', 'name', 'config']}
+    #{crud.custom 'provider'}
+      #{field 'object.provider'}
+		<label for="object_provider">
+			&{'provider'}
+		</label>
+		<select name="object.provider" id="object_provider">
+		#{list items:lib.WidgetManager.getAllWidgetNames(), as:'widget'}
+						<option value="${widget}" #{if widget == field.value }selected="selected"#{/if}  >${widget}</option>
+		#{/list}
+		</select>
+        <span class="crudHelp"></span>
+        #{/field}
+        
+        <script>
+		$("#object_provider").change(function() {
+			var url = "/desc/config/"+$(this).val();
+			var targ = $("#object_config").parent().children(".crudHelp");
+			targ.text(url);
+			targ.load(url);
+		});
+		</script>
+    #{/crud.custom}
+
+		#{/crud.form}	
+		<p class="crudButtons">
+			<input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+		</p>
+	#{/form}
+	</div>
+
+</div>

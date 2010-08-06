@@ -1,0 +1,129 @@
+#{extends 'main.html' /}
+#{set title:title+' - Widget Sandbox: '+widget.name /}
+#{set header:'Widget Sandbox' /}
+#{set dashid:'-1' /}
+
+<script>
+  _dashboard = new Dashboard(-1,"Widget Sandbox", "no-update", true);
+</script>
+
+<div id="dashboard" class="dashboard interactive">
+<div id="dialogger">
+	<div id="dialog-frame"><div id="dialog">
+		<div id="dialog-content"></div>
+		<div id="dialog-close"><a href="#" id="close" class="interact">Close</a><span class="nointeract">This message will close shortly...</span></div>	
+	</div></div>
+	<div id="dim"></div>
+</div>
+
+	<div style="clear:both"></div>
+
+	<div class="column" style="width: 25%">
+		<div class="column-content">
+		<h1>Edit</h1>
+		<style>
+			.preview lable, .preview input, .preview textarea, .preview select {
+				display: block;
+			}
+			.preview, .create {
+				margin: 2em;
+			}
+			.preview .field {
+				margin-bottom: 1.5em;
+			}
+			.preview .help {
+				color: #cccccc;
+				margin-bottom: 1em;
+			}
+		</style>
+		<form class="preview" method="post" action="/sandbox">
+			<div class="field">
+			<label for="object.provider">Base Widget</label>
+			<select name="object.provider" id="object_provider">
+			#{list items:lib.WidgetManager.getAllWidgetNames(), as:'w'}
+							<option value="${w}" #{if w == widget.provider }selected="selected"#{/if}>${w}</option>
+			#{/list}
+			</select>
+			</div>
+			
+			<script>
+				$("#object_provider").change(function() {
+					var url = "/desc/config/"+$(this).val();
+					$("#confhelp").text(url);
+					$("#confhelp").load(url);
+				});
+			</script>
+
+			<div class="field">
+			<label for="object.config">Widget Conifg</label>
+			<textarea name="object.config">${widget.config}</textarea>
+			<p id="confhelp" class="help">${widget.getWidget().describeConfig().replace("\n","\n<br />\n").raw()}</p>
+			</div>
+			
+			<div class="field">
+			<label for="wparams">Assignment Params</label>
+			<textarea name="wparams">${wparams}</textarea>
+			</div>
+
+			<br />
+			<input type="submit" value="Preview Widget &rarr;"/>
+		</form>
+		
+		</div>
+	</div>
+
+	<div class="column" style="width: 5%">
+		<div class="column-content"></div>
+	</div>
+
+	<div class="column" style="width: 40%">
+	<div class="column-content">
+	<h1>Preview</h1>
+			<div class="widget" >
+				${widget.render(wid, wparams, true).raw()}
+			</div>
+	</div>
+	</div>
+	
+	<div class="column" style="width: 5%">
+		<div class="column-content"></div>
+	</div>
+
+
+	<div class="column" style="width: 25%">
+		<div class="column-content">
+				
+		<h1>Save</h1>
+		<form class="create preview" method="get" action="@{admin.WidgetInstances.blank()}">
+			<label for="a">Name</label>
+			<input type="text" name="a" value="${widget.name}" disabled="disabled"/>
+			<input type="hidden" name="object.name" value="${widget.name}"/>
+
+		
+			<label for="b">Provider</label>
+			<input type="text" name="b" value="${widget.provider}" disabled="disabled"/>
+			<input type="hidden" name="object.provider" value="${widget.provider}" />
+
+			<label for="c">Conifg</label>
+			<textarea name="c" disabled="disabled" >${widget.config}</textarea>
+			<input type="hidden" name="object.config" value="${widget.config}" />
+
+			<br />
+			<input type="submit" value="Create ->"/>
+		</form>
+		
+		</div>
+	</div>
+	
+	<div class="column" style="width: 10%">
+		<div class="column-content"></div>
+	</div>
+	
+<div style="clear:both"></div>
+</div>
+
+
+<script>
+  Dashboard.fatal = Dashboard.warn;
+  $(function() {_dashboard.start( false );});
+</script>

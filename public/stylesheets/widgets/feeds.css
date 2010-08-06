@@ -1,0 +1,36 @@
+
+.feedwidget {
+	margin-bottom: 3em;
+}
+
+.feedwidget .feedwidget-last-updated {
+	display:none;
+	color: #cccccc;
+}
+
+.feedwidget .ordered .item:first-child {
+	font-size: 1.5em;
+}
+
+
+.feedwidget .item {
+	background-color: #f6f6f6;
+	-moz-border-radius: 1em;
+	border-radius: 1em;
+	clear: both;
+	margin-bottom: 2px;
+}
+
+.feedwidget .item .title {
+	float: left;
+	width: 50%;
+	max-width: 150px;
+	margin-right: 8px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+.feedwidget .item .body {
+	float: left;
+}

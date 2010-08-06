@@ -1,0 +1,17 @@
+Prerequisits
+	Play! Framework
+
+Install
+	cd awacs
+	cp conf/application.conf.example conf/application.conf
+	play run
+	# browse to http://<hostname>:9000
+
+Extra Dependencies
+	The 'extra' module contains a few more widgets, such as an RSS reader, a library for fetch google docs, etc
+	Install the JAR files listed in extra/DEPENDENCIES to extra/lib and uncomment the line "module.extra=..." in
+	application.conf.
+		
+More info
+	Check the Play! Framework docs for deployment options
+	

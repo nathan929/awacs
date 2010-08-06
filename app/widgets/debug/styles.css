@@ -1,0 +1,32 @@
+.debugger dl {
+	float: left;
+	display: block;
+	margin: 1em;
+}
+
+.debug dl lh {
+	display:block;
+	margin-right: .5em;
+	font-size: 1.5em;
+}
+
+.vars dt, .vars dd {
+	display: inline-block;
+}
+.vars dd {
+	margin: .25em;
+}
+
+.debug dl dt {
+	color: #999;
+}
+.debugger dl dd {
+	margin-left: 1.5em;
+	font-style: italic;
+	margin-bottom: .5em;
+	min-height: 1em;	
+}
+
+.debug {
+	border: 1px dotted red;
+}

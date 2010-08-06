@@ -1,0 +1,52 @@
+body.noninteractive {
+	overflow: hidden;
+}
+a:active {
+	color: #999;
+}
+a:visited {
+	color: #333;
+}
+
+a:link {
+	color: #666;
+}
+
+.dashboard .widget-title {
+	margin: 0px;
+}
+
+.dashboard .widget iframe {
+	border: none;
+}
+
+.dashboard iframe {
+	border: none;
+	width: 100%;
+}
+
+.noninteractive iframe {
+	overflow: hidden;
+}
+
+.dashboard .column {
+	margin: 0px;
+	padding: 0px;
+	float: left;
+}	
+
+.dashboard .column .column-content {
+	padding: 10px;
+}
+
+.noninteractive .interact {
+	display:none;
+}
+
+.interactive .nointeract {
+	display:none;
+}
+
+.spacer h2 {
+	margin-bottom: 0px;
+}

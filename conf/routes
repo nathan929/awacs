@@ -1,0 +1,29 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Map static resources from the /app/public folder to the /public path
+GET /public/                                	staticDir:public
+*	/admin              						module:crud
+
+*	/json/{className}							Dynamic.json
+*	/json/{className}/{endPointName} 			Dynamic.json
+*	/json/{className}/							Dynamic.json
+
+*	/scripts/{pkgName}.js						Dynamic.scripts
+*	/styles/{pkgName}.css						Dynamic.styles
+
+*	/desc/config/{className}					Info.descConfig
+
+
+*	/               							Info.index
+*	/widgets               						Info.widgets
+*	/sandbox/{className}/{config}/{wparams}		Info.sandbox
+*	/sandbox/{className}/{config}				Info.sandbox
+*	/sandbox/{className}						Info.sandbox
+*	/sandbox									Info.sandbox
+
+*	/check/{id}									Displays.check
+*	/view/{id}									Displays.display(interactive:'true')
+*	/{id}										Displays.display
+

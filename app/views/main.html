@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/dashboard.css'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/dialog.css'}">
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/widgets/feeds.css'}">
+        #{get 'moreStyles' /}
+        
+        #{list items:cssIncludes, as:'inc'}
+        	<link rel="stylesheet" type="text/css" media="screen" href="/styles/${inc}.css">        
+        #{/list}
+
+        <link rel="shortcut icon" type="image/x-icon" href="@{'/public/images/favicon.ico'}">
+        
+        <script src="@{'/public/javascripts/jquery-1.4.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/jquery-ui.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/jquery.jsonp.js'}" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+        <script src="@{'/public/javascripts/dashboard.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/widgets/feed.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/widgets/content.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/widgets/chart.js'}" type="text/javascript" charset="utf-8"></script>
+        #{get 'moreScripts' /}
+        
+        #{list items:jsIncludes, as:'inc'}
+        	<script src="/scripts/${inc}.js" type="text/javascript" charset="utf-8"></script>
+        #{/list}
+    </head>
+    <body class="#{if interactive}interactive#{/if}#{else}noninteractive#{/else}">
+       <div class="header">
+
+         <a href="/admin#{if dashid}/dashboards/${dashid}#{/if}" id="goadmin">Customize &rarr;</a>
+       #{if dashid}
+       <div id="switchmode">
+         <a href="/${dashid}" id="go-noninteractive" class="interact">Switch to non-interactive &rarr;</a>
+         <a href="/view/${dashid}" id="go-interactive" class="nointeract">Switch to interactive &rarr;</a>
+       </div>
+       #{/if}
+         <h1><a href="/" id="logo">${models.Setting.getSystemName()}</a></h1>
+         <h1>#{get 'header' /}</h1>
+       </div>
+       <!--  main_content -->
+        
+        #{doLayout /}
+
+       <!--  /main_content -->       
+    </body>
+</html>

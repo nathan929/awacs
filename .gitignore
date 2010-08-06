@@ -1,0 +1,7 @@
+conf/application.conf
+tmp/*
+db/*
+eclipse
+.settings
+.project
+.classpath

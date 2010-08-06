@@ -1,0 +1,34 @@
+#{extends 'CRUD/layout.html' /}
+
+<div id="crudList" class="${type.name}">
+	
+	<h2 id="crudListTitle">&{'crud.list.title', type.name}</h2>
+
+	<div id="crudListSearch">
+		#{crud.search /}
+	</div>
+
+	<div id="crudListTable">
+	</div>
+	#{crud.table fields:['Customize', 'Go To']}
+ 
+		#{crud.custom 'Customize'}
+  			<a href="@{admin.Dashboards.show(object.id)}">${object.name}</a>
+		#{/crud.custom}
+		#{crud.custom 'Go To'}
+  			<a href="@{Displays.display(object.id)}">Go To Dashboard -></a>
+		#{/crud.custom}
+		
+
+ 
+	#{/crud.table}
+	
+	<div id="crudListPagination">
+		#{crud.pagination /}
+	</div>
+	
+	<p id="crudListAdd">
+		<a href="@{blank()}">&{'crud.add', type.modelName}</a>
+	</p>
+
+</div>

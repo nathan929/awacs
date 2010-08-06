@@ -1,0 +1,13 @@
+<!--  rss widget -->
+	<h2 class="widget-title">{%WIDGET_NAME%}</h2>
+
+	<div id="rss{%WIDGET_ID%}" class="feedwidget">
+		<div class="feedwidget-last-updated"></div>
+		<div class="feedwidget-items"></div>
+	</div>
+
+	<script>
+		Dashboard.register(new FeedWidget("{%WIDGET_NAME%}", "/json/{%WIDGET_CLASS%}", "#rss{%WIDGET_ID%}", "?url="+encodeURI("{%WIDGET_CONFIG%}") ) );
+	</script>
+	
+<!--  /rss widget -->

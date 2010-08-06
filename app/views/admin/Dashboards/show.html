@@ -1,0 +1,224 @@
+#{extends 'admin/Dashboards/layout.html' /}
+<script>
+	function getWidths() {
+		widths = parseWidths($("#object_widths").val());
+		$("#object_widths").val(widths.join(","));
+		return widths;
+	}
+	
+	function sum(arr) {
+		var s = 0;
+		for( var w in arr) {
+			s += parseInt(arr[w]);
+		}
+		return s;
+	}
+		
+	function parseWidths(widthString) {
+		var widths = widthString.split(",");
+	
+		// make sure everything is an int, or 0
+		for(var i in widths) {
+			widths[i] = parseInt(widths[i]);
+			if(isNaN(widths[i]))
+				widths[i] = 0;
+		}
+
+		if(sum(widths) > 100) {
+			var factor = 100 / sum(widths);
+				for(var i in widths)
+				widths[i] = Math.floor(widths[i] * factor);
+		}
+		
+		// decrease until <100
+		while(sum(widths) > 100) {
+			for(var i in widths)
+				widths[i] = Math.min(5,widths[i] - 1);
+		}
+
+		// increase until as large as possible
+		var s = sum(widths);
+		while(s < 100 - (100 % widths.length) ) {
+			for(var i in widths)
+				if(s < 100) {
+					widths[i] = widths[i] + 1;
+					s += 1;
+				}
+		}
+		
+		return widths;
+	}
+</script>
+
+<div id="crudShow" class="${type.name}">
+	
+	<h2 id="crudShowTitle">&{'crud.show.title', type.modelName}</h2>
+	
+	<div class="objectForm">
+	#{form action:@save(object.id), enctype:'multipart/form-data'}
+	#{crud.form}
+
+    #{crud.custom 'assignments'}
+
+	
+
+	<div style="float:left; width: 60%;">
+		<h2>Layout</h2>
+		<div id="layout" style="width: 100%">
+			#{list items:object.widgets(), as:'col'}
+			<div class="list-container" style="width: ${object.columnWidths().get(col_index-1)}%">
+				<ul id="column-${col_index}" class="column widget-list" style="display:block;">
+				#{list items:col, as:'a'}
+	    			<li id="${a.widget.id}">${a.widget.name}
+	    			 <a href="@{admin.WidgetInstances.show(a.widget.id)}" title="edit widget"><img src="/public/images/edit.png" class="edit" alt="*"/></a>
+	    			<span class="tags noshow">#{list items:a.widget.tags, as:'tag'}${tag} #{/list}</span>
+	    			<span class="provider noshow">${a.widget.provider}</span>
+	    			</li>
+		   		#{/list}
+				</ul>
+				<input type="hidden" id="column-${col_index}-content" name="column-${col_index}-content" value="-1" />
+			</div>
+	    	#{/list}
+	    	
+	    </div>
+	    <div style="clear:both"></div>
+	</div>
+	    
+	<div style="float:right; margin-right: 50px; width: 30%">
+		<h2>Available Widgets</h2>
+		<input type="text" value="Search..." id="widget-search" />
+	    <ul id="unused" class="widget-list" style="width: 200px">
+	        #{list items:models.WidgetInstance.sorted(), as:'widget'}
+	               #{if !object.allWidgets().contains(widget)}
+	                 <li id="${widget.id}">${widget.name}
+	                 <a href="@{admin.WidgetInstances.show(widget.id)}" title="edit widget"><img src="/public/images/edit.png" class="edit" alt="*"/></a>
+	                 <span class="tags noshow">#{list items:widget.tags, as:'tag'}${tag} #{/list}</span>
+	                 <span class="provider noshow">${widget.provider}</span>
+	                 </li>
+	               #{/if}
+	        #{/list}
+	    </ul>
+	</div>
+	    
+	    <div style="clear:both"></div>
+    #{/crud.custom}
+	#{/crud.form}
+
+		<p class="crudButtons">
+			<input type="submit" name="_save" value="&{'crud.save', type.modelName}" />
+			<input type="submit" name="_saveAndContinue" value="&{'crud.saveAndContinue', type.modelName}" />
+		</p>
+	#{/form}
+	</div>
+	
+	#{form @delete(object.id)}
+		<p class="crudDelete">
+			<input type="submit" value="&{'crud.delete', type.modelName}" />
+		</p>
+	#{/form}
+
+</div>
+
+<style type="text/css">
+	img.edit { border: 0px; float: right; opacity: 0.5;} 
+	.noshow { display: none; }
+	#layout { width: 100%; }
+	#unused { max-height: 15em; overflow: auto; }
+	.list-container {float: left;	 padding: 0px}
+	.widget-list { list-style-type: none; min-height: 14em; border: 1px dotted #ccc;  padding: 5px}
+	.widget-list li { margin-top: 2px; border: 1px dotted #ccc; cursor: move; min-height: 1em}
+</style>
+	<script type="text/javascript">
+	
+	function quickSearch() {
+		var search = $('#widget-search').val();
+		var terms = search.split(" ");
+		
+		$("#unused").find("li").each(function() {
+			var match = true;
+			for(var i in terms) {
+				if($(this).text().toLowerCase().indexOf(terms[i].toLowerCase()) == -1) {
+					match = false;
+					break;
+				}
+			}
+			if(match) 
+				$(this).show();
+			else 
+				$(this).hide();
+		});
+	}
+	$('#widget-search').keyup(quickSearch);
+	$('#widget-search').focus(function(thing) { if( $(this).val() == "Search...") $(this).val(""); });
+	var ignore = false;
+	
+	function checkColumns() {
+		$(".widget-list").sortable("destroy");
+		
+		widths = getWidths();
+		cols = Math.max(1, Math.min(5,widths.length));
+
+		var columns = $("#layout").find(".widget-list");
+		while(columns.size() > cols) {
+			columns.last().children("li").appendTo("#unused");
+			columns.last().parent().remove();
+			columns = $("#layout").find(".widget-list");
+		}
+			
+		while(columns.size() < cols) {
+			num = columns.size()+1;
+			div = $("<div><ul id=\"column-"+num+"\" class=\"column widget-list\"></ul></div>");
+			div.addClass("list-container");
+			input = $("<input type=\"hidden\" id=\"column-"+num+"-content\" name=\"column-"+num+"-content\" value=\"-1\" />");
+			input.appendTo(div);
+			$("#layout").append(div);
+			columns = $("#layout").find(".widget-list");	
+		}
+
+		$("#layout").find(".widget-list").each(function(){
+			var col = this.id.split("-")[1] - 1;
+			$(this).parent().css("width", widths[col]+"%");
+		});	
+		addListener();
+		readAssignments();
+	}
+
+
+
+	$("#object_widths").blur(checkColumns);
+	
+	function readAssignments() {
+		$("#layout").find(".widget-list").each(function(){
+			$("#"+this.id+"-content").val( $(this).sortable("toArray") );
+		});			
+	}
+
+
+	var _ignoreWidgetSort = false;
+	var handleUpdate = function(event, ui) {
+		if(!_ignoreWidgetSort)
+			readAssignments();
+		_ignoreWidgetSort = false;
+	}
+	
+	var handleRecieve = function() {_ignoreWidgetSort = true;}
+	function addListener() {
+		$(".widget-list").sortable("destroy");
+		$(".widget-list").sortable({
+				connectWith: '.widget-list',
+				placeholder: 'ui-state-highlight',
+				update: handleUpdate, 
+				receive: handleRecieve
+		});
+		
+		$(".widget-list").disableSelection();
+	}
+
+	
+	$(function() {
+		checkColumns();
+	});
+
+
+	
+	</script>

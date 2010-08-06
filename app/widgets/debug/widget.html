@@ -1,0 +1,13 @@
+<div id="debug{%WIDGET_ID%}" class="debug">
+
+	<h1>Debug Widget</h1>
+	
+	<dl class="vars">
+		<dt>Target selector: </dt><dd class="target">{%WIDGET_PARAMS%}</dd>
+	</dl>
+
+	<div class="debugger"></div>
+
+	<div style="clear: both"></div>
+</div>
+<script>Dashboard.register(new DebugWidget("#debug{%WIDGET_ID%}", "{%WIDGET_PARAMS%}"))</script>

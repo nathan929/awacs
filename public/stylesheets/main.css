@@ -1,0 +1,82 @@
+.clear {
+	clear: both;
+}
+
+html, body {
+    color:#333333;
+    font-family:"Lucida Grande",Tahoma,Verdana,Arial,sans-serif;
+    font-size:12px;
+    padding:0px;
+    margin:0px;
+}
+
+.header {
+    margin:0px;
+    position:relative;
+    top:0px;
+    right:0px;
+    width:100%;
+    background-color: #1b5790;
+    height: 20px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+}
+.header #logo {
+    float: left;
+    padding-right: 1em;
+    color: #fff;
+    text-decoration: none;
+}
+
+.header h1 {
+	font-size: 15px;
+	margin: 0;
+	padding: 0;
+}
+
+.header img {
+    height: 20px
+}
+
+#goadmin {
+	display: inline-block;
+	color: white;
+	float: right;
+	font-size: .8em;
+	padding: 2px;
+	text-decoration: none;
+}
+
+
+#switchmode {
+	display: inline-block;
+	float: right;
+	font-size: .8em;
+	padding: 2px;
+}
+
+#switchmode * {
+	color: white;
+	text-decoration: none;
+	margin-right: 1em;
+}
+
+
+#dash-list li {
+	background-color: #f6f6f6;
+	-moz-border-radius: 1em;
+	border-radius: 1em;
+	display: block;
+	margin: 5px;
+	padding: 5px;
+}
+#dash-list li a {
+	display: inline-block;
+	
+}
+#dash-list li span.widget{
+	display: inline-block;
+	margin-left: 10px;
+	padding: 2px;
+}

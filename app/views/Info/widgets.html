@@ -1,0 +1,84 @@
+#{extends 'main.html' /}
+#{set title:"Installed Widget Gallery" /}
+#{set header:'Widgets' /}
+#{set interactive : true /}
+<style>
+ul.widget-list {
+list-style-type: none;
+}
+
+.widget-list .widget {
+	padding: 1em;
+}	
+.widget-list li.widget {
+	float: left;
+	margin: 1em 1em 0 0;
+	width: 30%;
+	min-width: 15em;
+}
+.widget-list .widget .count {
+	color: #cccccc;
+}
+
+.widget-list .widget .info {
+	color: #666666;
+	margin-left: 1em;
+}
+
+.def {
+	margin-left:1em;
+}
+
+a.show {
+	color: #999999;
+}
+
+</style>
+<div class="clear"></div>
+#{if deleted != null}
+<h1>Deleted Widgets: ${deleted.size()}</h1>
+<ul>
+#{list items:deleted, as:i}
+	<li>${i}</li>
+#{/list}
+</ul>
+#{/if}
+
+<h1>Installed Widget Providers</h1>
+<ul class="widget-list">
+#{list items:widgets, as:'widget'}
+	<li class="widget">
+		<a href="/sandbox/${widget.fullName()}">
+		<img src="/public/images/edit.png" style="border: none; margin-top: 2px;" class="edit" alt="*"/></a>
+		<strong class="name">${widget.fullName()}</strong> 
+		<br />
+		
+		<a href="#" class="show">${instances.get(widget.fullName()).size()} instances</a> <span class="detail count">(${widget.getDefaultInstances().size()} default)</span>
+		
+		<div class="info">
+					<p class="desc">${widget.describeWidget()}</p>
+		</div>
+		
+		
+		<div class="instance-list">
+		#{list items:instances.get(widget.fullName()), as:'i'}
+			<a class="def" href="@{admin.WidgetInstances.show(i.id)}" title="edit widget">${i.name}</a>
+			<a class="def" href="/sandbox/${i.getProvider()}/${i.config}">(sandbox)</a>
+			<br />
+		#{/list}
+		</div>
+	</li>
+#{/list}
+</ul>
+
+<div class="clear"></div>
+<script>
+$(function(){
+	$(".instance-list").hide();
+	$(".show").click(function(){
+		$(this).parent().find(".instance-list").toggle(500);
+		return false;
+	});
+});
+
+</script>

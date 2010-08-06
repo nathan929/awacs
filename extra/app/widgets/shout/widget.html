@@ -1,0 +1,18 @@
+<!--  /shout widget -->
+	<h2 class="widget-title">{%WIDGET_NAME%}</h2>
+	<style> .shout input { margin: 1em; } </style>
+	<form action="#" class="interact shout">
+	   <input type="text" id="shout-author" value="John Doe" /><input type="text" id="shout-text" value="Good moring!" /><button id="postshout">Shout!</button>
+	</form>
+	<span class="nointeract" style="color: #ccc; font-size: small;">Use interactive dashboard to post</span>
+	
+	<div id="shouts{%WIDGET_ID%}" class="feedwidget">
+		<div class="feedwidget-last-updated"></div>
+		<div class="feedwidget-items"></div>
+	</div>
+
+	<script>
+		Dashboard.register(new Shoutbox("{%WIDGET_CONFIG%}", "/json/{%WIDGET_CLASS%}", "#shouts{%WIDGET_ID%}", "") );
+	</script>
+	
+<!--  /shout widget -->

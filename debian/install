@@ -1,0 +1,5 @@
+app     /var/lib/play/apps/digg-awacs/
+conf    /var/lib/play/apps/digg-awacs/
+extra   /var/lib/play/apps/digg-awacs/
+lib     /var/lib/play/apps/digg-awacs/
+public  /var/lib/play/apps/digg-awacs/

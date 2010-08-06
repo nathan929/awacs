@@ -1,0 +1,12 @@
+digg-awacs (0.2) unstable; urgency=low
+
+  * Better dirs
+
+ -- Jorge A Gallegos <kad@digg.com>  Thu, 29 Jul 2010 17:59:04 -0700
+
+digg-awacs (0.1) unstable; urgency=low
+
+  * Initial debianization
+
+ -- Jorge A Gallegos <kad@digg.com>  Thu, 29 Jul 2010 15:12:41 -0800
+

@@ -1,0 +1,34 @@
+# Add a default instance of a widget if it doesn't exist by adding an entry to this file.
+# a line beginning with "INSTANCE" starts an instance defination which consists of:
+# 	* provider class
+#	* human readable name
+#	* config string
+#	* tags string
+#
+# Each value must each be on a separate line.
+# Append a unique number to "INSTANCE" to create multiple instances of same widget.
+#
+# Example:
+#
+#	INSTANCE
+#	yelp.BarWidget
+#	5 Star Happy Hours
+#	{ 'search': "happy hour", 'stars': 5}
+#	local bars yelp
+#
+#	INSTANCE_2
+#	yelp.BarWidget
+#	4 Star Happy Hours
+#	{ 'search': "happy hour", 'stars': 4}
+#	local bars yelp
+
+
+INSTANCE
+#provider
+trends.Trends
+#name
+Trending Topics
+#config
+
+#tags
+trends dynamic live

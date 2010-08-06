@@ -1,0 +1,41 @@
+#{extends 'main.html' /}
+#{set title:title+' - '+d.name /}
+#{set header:d.name /}
+#{set dashid:d.id /}
+
+<script>
+  var interactive = #{if interactive}true#{/if}#{else}false#{/else};
+  _dashboard = new Dashboard("${d.getStatus().id}","${d.name}", "/check/${id}",interactive);
+</script>
+
+<div id="dashboard" class="dashboard #{if interactive}interactive#{/if}#{else}noninteractive#{/else}">
+<div id="dialogger">
+	<div id="dialog-frame"><div id="dialog">
+		<div id="dialog-content"></div>
+		<div id="dialog-close"><a href="#" id="close" class="interact">Close</a><span class="nointeract">This message will close shortly...</span></div>	
+	</div></div>
+	<div id="dim"></div>
+	<div id="blackout" class="nointeract"></div>
+</div>
+
+	<div style="clear:both"></div>
+	#{list items:d.columnWidths(), as:'column'}
+	<div class="column" style="width: ${column}%">
+	<div class="column-content">
+		#{list items:d.widgets().get(column_index-1), as:'widget'}
+			<div class="widget" >
+				${widget.render().raw()}
+			</div>
+		#{/list}
+	</div>
+	</div>
+	#{/list}
+<div style="clear:both"></div>
+</div>
+
+
+<script>
+  var start_hidden = #{if d.getStatus().hide}true#{/if}#{else}false#{/else};
+  
+  $(function() {_dashboard.start( start_hidden );});
+</script>

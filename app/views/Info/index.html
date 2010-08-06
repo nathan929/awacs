@@ -1,0 +1,21 @@
+#{extends 'main.html' /}
+#{set title:title /}
+#{set header:'Dashboards' /}
+
+<div class="clear"></div>
+<h1>Dashboards</h1>
+<ul id="dash-list">
+#{list items:dashboards, as:'dash'}
+	<li>
+		<a href="/view/${dash.id}">${dash.name}</a> (<a href="/${dash.id}">non-interactive</a>)
+		<div>
+			#{list items:dash.allWidgets(), as:'widget'}
+			<span class="widget">${widget.name}</span>
+		#{/list}
+		</div>
+	</li>
+#{/list}
+</ul>
+
+<div class="clear"></div>
+
