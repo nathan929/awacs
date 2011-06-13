@@ -60,13 +60,12 @@ public class Dynamic extends Controller {
 		Widget widget = null;
 		try {
 			widget = WidgetManager.getWidget(className);
+			Object o = widget.endpoint(endPointName, params);
+			response.contentType = "text/plain";
+			renderJSON(o);
 		} catch (Exception e) {
 			notFound(className);
 		}
-
-		Object o = widget.endpoint(endPointName, params);
-		response.contentType = "text/plain";
-		renderJSON(o);
 
 	}
 
